@@ -27,14 +27,14 @@ const ContactState = (props) => {
         name: 'Jeff Bezos',
         email: 'jeffy@gmail.com',
         phone: '222-222-2222',
-        type: 'mythic',
+        type: 'personal',
       },
       {
         id: 3,
         name: 'Mark Zuckker',
         email: 'markfb@gmail.com',
         phone: '333-633-3375',
-        type: 'epic',
+        type: 'professional',
       },
     ],
   };
