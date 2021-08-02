@@ -5,24 +5,27 @@ import About from './components/pages/About';
 import Navbar from './components/layout/Navbar';
 
 import ContactState from './context/contact/ContactState';
+import AuthState from './context/auth/AuthState';
 
 import './App.css';
 
 const App = () => {
   return (
-    <ContactState>
-      <Router>
-        <div className='App'>
-          <Navbar />
-          <div className='container'>
-            <Switch>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/about' component={About} />
-            </Switch>
+    <AuthState>
+      <ContactState>
+        <Router>
+          <div className='App'>
+            <Navbar />
+            <div className='container'>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/about' component={About} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
-    </ContactState>
+        </Router>
+      </ContactState>
+    </AuthState>
   );
 };
 
