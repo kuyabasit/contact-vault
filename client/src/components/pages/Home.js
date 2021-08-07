@@ -4,13 +4,19 @@ import ContactForm from '../contacts/ContactForm';
 import ContactFilter from '../contacts/ContactFilter';
 import AuthContext from '../../context/auth/authContext';
 
-const Home = () => {
+const Home = (props) => {
   const authContext = useContext(AuthContext);
 
+  const { loadUser, isAuthenticated } = authContext;
+
   useEffect(() => {
-    authContext.loadUser();
+    if (!isAuthenticated) {
+      props.history.push('/login');
+    }
+
+    loadUser();
     // eslint-disable-next-line
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className='grid-2'>
