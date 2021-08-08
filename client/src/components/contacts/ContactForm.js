@@ -32,6 +32,7 @@ const ContactForm = () => {
       setAlert(error, 'danger');
       clearErrors();
     }
+    // eslint-disable-next-line
   }, [error, contactContext, current]);
 
   const [contact, setContact] = useState({
