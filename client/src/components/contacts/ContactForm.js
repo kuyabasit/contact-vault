@@ -51,6 +51,8 @@ const ContactForm = () => {
     e.preventDefault();
     if (current === null) {
       addContact(contact);
+    } else if (name === '') {
+      setAlert('Name is required', 'danger');
     } else {
       updateContact(contact);
     }
