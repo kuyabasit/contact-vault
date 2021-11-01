@@ -1,17 +1,22 @@
 import React, { useState, useContext, useEffect } from 'react';
-import AuthContext from '../../context/auth/authContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login, clearErrors } from '../../actions/authActions';
 import AlertContext from '../../context/alert/alertContext';
 
-const Login = (props) => {
+const Login = ({
+  history,
+  login,
+  clearErrors,
+  auth: { error, isAuthenticated },
+}) => {
   const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
 
-  const { login, error, clearErrors, isAuthenticated } = authContext;
   const { setAlert } = alertContext;
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('/');
+      history.push('/');
     }
 
     if (
@@ -22,7 +27,7 @@ const Login = (props) => {
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated, history]);
 
   const [user, setUser] = useState({
     email: '',
@@ -78,4 +83,14 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { login, clearErrors })(Login);

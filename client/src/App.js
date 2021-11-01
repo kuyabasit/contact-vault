@@ -8,15 +8,17 @@ import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
 import PrivateRoute from './components/routing/PrivateRoute';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 import ContactState from './context/contact/ContactState';
-import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 
 import './App.css';
 
 const App = () => {
   return (
-    <AuthState>
+    <Provider store={store}>
       <ContactState>
         <AlertState>
           <Router>
@@ -35,7 +37,7 @@ const App = () => {
           </Router>
         </AlertState>
       </ContactState>
-    </AuthState>
+    </Provider>
   );
 };
 

@@ -1,22 +1,26 @@
-import React, { useContext, Fragment, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { loadUser, logout } from '../../actions/authActions';
 import { Link } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
 import ContactContext from '../../context/contact/contactContext';
 
-const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
+const Navbar = ({
+  title,
+  icon,
+  loadUser,
+  logout,
+  auth: { isAuthenticated, user },
+}) => {
   const contactContext = useContext(ContactContext);
 
   const { clearContacts } = contactContext;
-
-  const { isAuthenticated, logout, user, loadUser } = authContext;
 
   useEffect(() => {
     loadUser();
 
     // eslint-disable-next-line
-  }, []);
+  }, [isAuthenticated]);
 
   const onLogout = () => {
     logout();
@@ -60,6 +64,10 @@ const Navbar = ({ title, icon }) => {
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.string,
+  logout: PropTypes.func.isRequired,
+  loadUser: PropTypes.func.isRequired,
+  user: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
 };
 
 Navbar.defaultProps = {
@@ -67,4 +75,8 @@ Navbar.defaultProps = {
   icon: 'fas fa-id-card',
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout, loadUser })(Navbar);

@@ -1,18 +1,22 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register, clearErrors } from '../../actions/authActions';
 import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
 
-const Register = (props) => {
+const Register = ({
+  history,
+  register,
+  clearErrors,
+  auth: { error, isAuthenticated },
+}) => {
   const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
-
-  const { register, error, clearErrors, isAuthenticated } = authContext;
 
   const { setAlert } = alertContext;
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push('/');
+      history.push('/');
     }
 
     if (error === 'User already exists') {
@@ -20,7 +24,7 @@ const Register = (props) => {
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated, history]);
 
   const [user, setUser] = useState({
     name: '',
@@ -106,4 +110,14 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  register: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { register, clearErrors })(Register);
