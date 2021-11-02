@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import AlertContext from '../../context/alert/alertContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setAlert } from '../../actions/alertActions';
 import ContactContext from '../../context/contact/contactContext';
 
-const ContactForm = () => {
+const ContactForm = ({ setAlert }) => {
   const contactContext = useContext(ContactContext);
-  const alertContext = useContext(AlertContext);
 
   const {
     error,
@@ -14,7 +15,6 @@ const ContactForm = () => {
     clearCurrent,
     current,
   } = contactContext;
-  const { setAlert } = alertContext;
 
   useEffect(() => {
     if (current !== null) {
@@ -125,4 +125,8 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+ContactForm.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert })(ContactForm);

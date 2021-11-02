@@ -1,19 +1,16 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register, clearErrors } from '../../actions/authActions';
-import AlertContext from '../../context/alert/alertContext';
+import { setAlert } from '../../actions/alertActions';
 
 const Register = ({
   history,
   register,
   clearErrors,
+  setAlert,
   auth: { error, isAuthenticated },
 }) => {
-  const alertContext = useContext(AlertContext);
-
-  const { setAlert } = alertContext;
-
   useEffect(() => {
     if (isAuthenticated) {
       history.push('/');
@@ -114,10 +111,13 @@ Register.propTypes = {
   register: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { register, clearErrors })(Register);
+export default connect(mapStateToProps, { register, clearErrors, setAlert })(
+  Register
+);

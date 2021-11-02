@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 import ContactState from './context/contact/ContactState';
-import AlertState from './context/alert/AlertState';
 
 import './App.css';
 
@@ -20,22 +19,20 @@ const App = () => {
   return (
     <Provider store={store}>
       <ContactState>
-        <AlertState>
-          <Router>
-            <div className='App'>
-              <Navbar />
-              <div className='container'>
-                <Alerts />
-                <Switch>
-                  <PrivateRoute exact path='/' component={Home} />
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/register' component={Register} />
-                  <Route exact path='/login' component={Login} />
-                </Switch>
-              </div>
+        <Router>
+          <div className='App'>
+            <Navbar />
+            <div className='container'>
+              <Alerts />
+              <Switch>
+                <PrivateRoute exact path='/' component={Home} />
+                <Route exact path='/about' component={About} />
+                <Route exact path='/register' component={Register} />
+                <Route exact path='/login' component={Login} />
+              </Switch>
             </div>
-          </Router>
-        </AlertState>
+          </div>
+        </Router>
       </ContactState>
     </Provider>
   );
