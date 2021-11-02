@@ -11,29 +11,25 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import ContactState from './context/contact/ContactState';
-
 import './App.css';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <ContactState>
-        <Router>
-          <div className='App'>
-            <Navbar />
-            <div className='container'>
-              <Alerts />
-              <Switch>
-                <PrivateRoute exact path='/' component={Home} />
-                <Route exact path='/about' component={About} />
-                <Route exact path='/register' component={Register} />
-                <Route exact path='/login' component={Login} />
-              </Switch>
-            </div>
+      <Router>
+        <div className='App'>
+          <Navbar />
+          <div className='container'>
+            <Alerts />
+            <Switch>
+              <PrivateRoute exact path='/' component={Home} />
+              <Route exact path='/about' component={About} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </Switch>
           </div>
-        </Router>
-      </ContactState>
+        </div>
+      </Router>
     </Provider>
   );
 };

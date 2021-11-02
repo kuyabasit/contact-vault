@@ -1,21 +1,22 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alertActions';
-import ContactContext from '../../context/contact/contactContext';
+import {
+  clearErrors,
+  addContact,
+  updateContact,
+  clearCurrent,
+} from '../../actions/contactActions';
 
-const ContactForm = ({ setAlert }) => {
-  const contactContext = useContext(ContactContext);
-
-  const {
-    error,
-    clearErrors,
-    addContact,
-    updateContact,
-    clearCurrent,
-    current,
-  } = contactContext;
-
+const ContactForm = ({
+  setAlert,
+  clearErrors,
+  addContact,
+  updateContact,
+  clearCurrent,
+  contact: { error, current },
+}) => {
   useEffect(() => {
     if (current !== null) {
       setContact(current);
@@ -126,7 +127,23 @@ const ContactForm = ({ setAlert }) => {
 };
 
 ContactForm.propTypes = {
+  error: PropTypes.object,
+  current: PropTypes.object,
   setAlert: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  addContact: PropTypes.func.isRequired,
+  updateContact: PropTypes.func.isRequired,
+  clearCurrent: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert })(ContactForm);
+const mapStateToProps = (state) => ({
+  contact: state.contact,
+});
+
+export default connect(mapStateToProps, {
+  setAlert,
+  clearErrors,
+  addContact,
+  updateContact,
+  clearCurrent,
+})(ContactForm);

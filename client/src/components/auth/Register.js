@@ -110,7 +110,7 @@ const Register = ({
 Register.propTypes = {
   register: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired,
 };
 

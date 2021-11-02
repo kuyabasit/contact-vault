@@ -1,26 +1,22 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadUser, logout } from '../../actions/authActions';
+import { clearContacts } from '../../actions/contactActions';
 import { Link } from 'react-router-dom';
-import ContactContext from '../../context/contact/contactContext';
 
 const Navbar = ({
   title,
   icon,
   loadUser,
   logout,
+  clearContacts,
   auth: { isAuthenticated, user },
 }) => {
-  const contactContext = useContext(ContactContext);
-
-  const { clearContacts } = contactContext;
-
   useEffect(() => {
     loadUser();
-
     // eslint-disable-next-line
-  }, [isAuthenticated]);
+  }, []);
 
   const onLogout = () => {
     logout();
@@ -68,6 +64,7 @@ Navbar.propTypes = {
   loadUser: PropTypes.func.isRequired,
   user: PropTypes.object,
   isAuthenticated: PropTypes.bool,
+  clearContacts: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {
@@ -79,4 +76,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { logout, loadUser })(Navbar);
+export default connect(mapStateToProps, { logout, loadUser, clearContacts })(
+  Navbar
+);

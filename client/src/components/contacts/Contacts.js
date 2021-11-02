@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getContacts } from '../../actions/contactActions';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ContactItem from './ContactItem';
-import ContactContext from '../../context/contact/contactContext';
 import Spinner from '../layout/Spinner';
 
-const Contacts = () => {
-  const contactContext = useContext(ContactContext);
-
-  const { contacts, filtered, getContacts, loading } = contactContext;
-
+const Contacts = ({
+  getContacts,
+  contact: { contacts, filtered, loading },
+}) => {
   useEffect(() => {
     getContacts();
     // eslint-disable-next-line
@@ -35,4 +36,15 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+Contacts.propTypes = {
+  getContacts: PropTypes.func.isRequired,
+  contacts: PropTypes.object.isRequired,
+  filtered: PropTypes.object.isRequired,
+  loading: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  contact: state.contact,
+});
+
+export default connect(mapStateToProps, { getContacts })(Contacts);

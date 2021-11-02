@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  deleteContact,
+  setCurrent,
+  clearCurrent,
+} from '../../actions/contactActions';
 
-import ContactContext from '../../context/contact/contactContext';
-
-const ContactItem = ({ contact }) => {
-  const contactContext = useContext(ContactContext);
-
-  const { deleteContact, setCurrent, clearCurrent } = contactContext;
-
+const ContactItem = ({ contact, deleteContact, setCurrent, clearCurrent }) => {
   const { name, _id, email, phone, type } = contact;
 
   const onDelete = () => {
@@ -58,6 +58,11 @@ const ContactItem = ({ contact }) => {
 
 ContactItem.propTypes = {
   contact: PropTypes.object.isRequired,
+  deleteContact: PropTypes.func.isRequired,
+  setCurrent: PropTypes.func.isRequired,
+  clearCurrent: PropTypes.func.isRequired,
 };
 
-export default ContactItem;
+export default connect(null, { deleteContact, setCurrent, clearCurrent })(
+  ContactItem
+);

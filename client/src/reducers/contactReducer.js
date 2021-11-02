@@ -10,20 +10,24 @@ import {
   CLEAR_FILTER,
   CONTACT_ERROR,
   CLEAR_ERRORS,
-} from '../types';
+  SET_LOADING,
+} from '../actions/types';
 
-const contactReducer = (state, action) => {
+const initialState = {
+  contacts: null,
+  current: null,
+  filtered: null,
+  error: null,
+  loading: false,
+};
+
+const contactReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CONTACTS:
       return {
         ...state,
         contacts: action.payload,
         loading: false,
-      };
-    case CLEAR_CONTACTS:
-      return {
-        ...state,
-        contacts: null,
       };
     case ADD_CONTACT:
       return {
@@ -35,7 +39,7 @@ const contactReducer = (state, action) => {
       return {
         ...state,
         contacts: state.contacts.map((contact) =>
-          contact._id === action.payload._id ? action.payload : contact
+          contact._id === action.payload ? action.payload : contact
         ),
         loading: false,
       };
@@ -56,6 +60,11 @@ const contactReducer = (state, action) => {
       return {
         ...state,
         current: null,
+      };
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contacts: null,
       };
     case FILTER_CONTACTS:
       return {
@@ -80,6 +89,11 @@ const contactReducer = (state, action) => {
       return {
         ...state,
         error: null,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;
