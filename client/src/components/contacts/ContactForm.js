@@ -34,7 +34,7 @@ const ContactForm = ({
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, contactContext, current]);
+  }, [error, current]);
 
   const [contact, setContact] = useState({
     name: '',
@@ -52,6 +52,7 @@ const ContactForm = ({
     e.preventDefault();
     if (current === null) {
       addContact(contact);
+      setContact({ name: '', email: '', phone: '', type: 'personal' });
     } else if (name === '') {
       setAlert('Name is required', 'danger');
     } else {

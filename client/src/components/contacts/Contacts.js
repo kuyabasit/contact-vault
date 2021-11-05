@@ -38,8 +38,8 @@ const Contacts = ({
 
 Contacts.propTypes = {
   getContacts: PropTypes.func.isRequired,
-  contacts: PropTypes.object.isRequired,
-  filtered: PropTypes.object.isRequired,
+  contacts: PropTypes.object,
+  filtered: PropTypes.object,
   loading: PropTypes.bool,
 };
 

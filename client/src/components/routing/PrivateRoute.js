@@ -3,7 +3,11 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ isAuthenticated, component: Component, ...rest }) => {
+const PrivateRoute = ({
+  auth: { isAuthenticated },
+  component: Component,
+  ...rest
+}) => {
   return (
     <Route
       {...rest}
